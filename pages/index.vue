@@ -79,13 +79,12 @@
             <div class="zixun-item" v-for="item in categoryData[0].data" style="font-size:14px" :key="item._id">
               <!-- <span class="zixun-category">时政热点</span> -->
               <span class="zixun-title">
-                <a :href="`/article/${item._id}`" target="_blank">{{item.title}}</a>
+                <a :href="`/article/${item._id}`" target="_blank">{{titleSlice(item.title,24)}}</a>
               </span>
             </div>
           </Row>
         </div>
         </Col>
-
       </Row>
       <!-- 广告宣称位置 -->
       <Row class="nav-ad">
@@ -109,7 +108,7 @@
           <Row class="cms-card-content">
             <div class="category-item" v-for="item in categoryData[index].data">
               <nuxt-link :to="`/article/${item._id}`">
-                {{item.title}}
+                {{titleSlice(item.title,26)}}
               </nuxt-link>
               <!-- <a :href="`/article/${item._id}`" target="_blank">fafafa</a> -->
             </div>
@@ -117,7 +116,6 @@
         </div>
         </Col>
       </Row>
-
       <!-- 文章热门 -->
       <Row class="news-hot" style="margin-top:16px">
         <Col span="16" style="padding-right:3px">
@@ -156,7 +154,8 @@ export default {
       focusArr: [],
       // 分类信息的数据集合
       categoryData: [],
-      focusArt: []
+      focusArt: [],
+      qiye: []
     }
   },
   components: {
@@ -165,9 +164,9 @@ export default {
   },
   methods: {
     // 标题长度截取
-    titleSlice(title) {
+    titleSlice(title, num = 24) {
       if (title !== undefined) {
-        return title.substr(0, 24)
+        return title.substr(0, num)
       } else {
         return ''
       }
@@ -195,12 +194,10 @@ export default {
         payload: {
           page: 1,
           size: 6,
-          tag: '5b600923cb34e68fc2d4cc18'
+          tag: '5b62f1e0a7a9651b3d9b47f4'
         }
       }
       const result = await this.post(params);
-      console.log('看看今日聚焦');
-      console.log(result);
       result.data.forEach(x => {
         const { title, description } = x
         if (title.length < 30) {
@@ -216,11 +213,11 @@ export default {
       const params = {
         url: 'category/group/list',
         payload: {
-          category_ids: '["5b62e1ea0974d417920f3763"]'
+          category_ids: '["5b62e3960974d417920f376e","5b62e38a0974d417920f376d","5b62e37e0974d417920f376c","5b62e3730974d417920f376b"]'
         }
       }
       const result = await this.post(params);
-      // this.categoryData = result.data
+      this.categoryData = result.data
       console.log('看看category')
       console.log(this.categoryData)
     },
@@ -255,7 +252,8 @@ export default {
         return 'hot-color-2'
       }
       return 'hot-color-3'
-    }
+    },
+
   },
   mounted() {
     this.hotList();
