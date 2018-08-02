@@ -4,9 +4,9 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide item" v-for="(banner,index) in banners" :key="index">
           <img :src="banner.url">
-          <!-- <nuxt-link :to="`/article/${banner._id}`" class="title">
-            <span>{{ banner._id }}</span>
-          </nuxt-link> -->
+          <nuxt-link :to="`/article/${banner._id}`" class="s-title">
+            <span>{{banner.title}}</span>
+          </nuxt-link>
         </div>
       </div>
       <div class="swiper-pagination swiper-pagination-bullets"></div>
@@ -50,10 +50,9 @@ export default {
         }
       }
       const result = await this.post(params)
-      this.banners = result.data.map(x => { return { url: x.img_list[0].url, _id: x._id } })
-
-      console.log('看看结果')
+      console.log('看看结果swiper')
       console.log(result)
+      this.banners = result.data.map(x => { return { url: x.img_list[0].url, _id: x._id, title: x.title } })
     }
   },
   mounted() {
@@ -87,6 +86,17 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .s-title {
+      position: absolute;
+      background: #fffcfcb3;
+      padding-bottom: 24px;
+      bottom: 0px;
+      width: 100%;
+      z-index: 9999;
+      font-size: 20px;
+      text-align: left;
+    }
   }
 
   .swiper-pagination {

@@ -9,7 +9,7 @@
         <div v-if="threeThumb!==null" class="item" v-for="(item,index) in threeThumb" :key="index">
           <a :href="`/article/${item._id}`" target="_blank">
             <img :src="item.img_list[0].url" alt="">
-            <div class="h-bottom">{{item.title}}</div>
+            <div class="h-bottom">{{titleSlice(item.title)}}</div>
           </a>
         </div>
         </Col>
@@ -20,7 +20,7 @@
           </div>
           <nuxt-link :to="`/article/${item._id}`" class="hot-div" v-for="(item,index) in hots" :key="index">
             <div class="hot-index" :class="hotClass(index)">{{index+1}}</div>
-            <span class="hot-title">{{item.title}}</span>
+            <span class="hot-title">{{titleSlice(item.title)}}</span>
           </nuxt-link>
         </div>
 
@@ -164,12 +164,20 @@ export default {
     HotRecomment
   },
   methods: {
+    // 标题长度截取
+    titleSlice(title) {
+      if (title !== undefined) {
+        return title.substr(0, 24)
+      } else {
+        return ''
+      }
+    },
     // 首页的三张小图
     async thumbList() {
       const params = {
         url: 'article/list',
         payload: {
-          page: 3,
+          page: 1,
           size: 3,
         }
       }
@@ -208,11 +216,12 @@ export default {
       const params = {
         url: 'category/group/list',
         payload: {
-          category_ids: '["5b612f12b3ba0a06b78052eb", "5b612d3e745d83027cccdebd", "5b5d180c97b7d72044e299af","5b5c841797b7d72044e299a7","5b3c8bc70ba2a3db46a86a89","5b38cfba4072a66f599a7735"]'
+          category_ids: '["5b62e1ea0974d417920f3763"]'
         }
       }
       const result = await this.post(params);
-      this.categoryData = result.data
+      // this.categoryData = result.data
+      console.log('看看category')
       console.log(this.categoryData)
     },
     async hotList() {

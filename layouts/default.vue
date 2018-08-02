@@ -1,7 +1,9 @@
 <template>
   <div>
     <the-header></the-header>
-    <nuxt/>
+    <keep-alive>
+      <nuxt/>
+    </keep-alive>
   </div>
 </template>
 <script>
