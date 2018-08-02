@@ -54,7 +54,6 @@ export default {
       }
       const result = await this.post(params)
       this.banners = result.data.map(x => { return { url: x.img_list[0].url, _id: x._id } })
-      alert('哈哈哈')
 
       console.log('看看结果')
       console.log(result)
