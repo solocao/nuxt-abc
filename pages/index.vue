@@ -6,12 +6,14 @@
         <nav-swiper></nav-swiper>
         </Col>
         <Col span="4" class="news-middle">
-        <div class="item" v-for="(item,index) in threeThumb" :key="index">
-          <img :src="item.img" alt="">
-          <div class="h-bottom">{{item.title}}</div>
+        <div v-if="threeThumb!==null" class="item" v-for="(item,index) in threeThumb" :key="index">
+          <a :href="`/article/${item._id}`" target="_blank">
+            <img :src="item.img_list[0].url" alt="">
+            <div class="h-bottom">{{item.title}}</div>
+          </a>
         </div>
         </Col>
-        <Col span="8" style="padding-left:6px">
+        <Col span="8" style="padding-left:10px">
         <div class="news-right">
           <div class="header">
             今日热点
@@ -63,9 +65,8 @@
             </div>
           </Row>
         </div>
-
         </Col>
-        <Col span="8" style="padding-left:3px">
+        <Col span="8" style="padding-left:10px">
         <!-- 企业经纬 -->
         <div class="cms-card" v-if="categoryData.length>0">
           <div class="cms-card-header">
@@ -134,7 +135,7 @@
 
         <Row class="color-line"></Row>
         </Col>
-        <Col span="8" style="padding-left:6px">
+        <Col span="8" style="padding-left:10px">
         <Affix :offset-top="60">
           <img style="width:100%" src="http://www.qiye.gov.cn/d/a/a4.jpg" alt="">
         </Affix>
@@ -150,11 +151,7 @@ import HotRecomment from '../components/HotRecomment.vue'
 export default {
   data() {
     return {
-      threeThumb: [
-        { title: '河水暴涨', img: 'http://www.chinanews.com/sh/2018/07-02/U397P4T8D8553588F107DT20180703144039.jpg', url: '' },
-        { title: '河水暴涨', img: 'http://www.chinanews.com/sh/2018/07-02/U397P4T8D8553588F107DT20180703144039.jpg', url: '' },
-        { title: '河水暴涨', img: 'http://www.chinanews.com/sh/2018/07-02/U397P4T8D8553588F107DT20180703144039.jpg', url: '' }
-      ],
+      threeThumb: null,
       hots: ['河水暴涨', '河水暴涨', '河水暴涨', '河水暴涨', '河水暴涨', '河水暴涨', '河水暴涨', '河水暴涨', '河水暴涨', '河水暴涨'],
       focusArr: [],
       // 分类信息的数据集合
@@ -167,6 +164,18 @@ export default {
     HotRecomment
   },
   methods: {
+    // 首页的三张小图
+    async thumbList() {
+      const params = {
+        url: 'article/list',
+        payload: {
+          page: 3,
+          size: 3,
+        }
+      }
+      const result = await this.post(params);
+      this.threeThumb = result.data;
+    },
     focusFormat(title, description) {
       const title1 = title;
       const description1 = description;
@@ -243,8 +252,8 @@ export default {
     this.hotList();
     this.categoryGroupList();
     this.focusList();
+    this.thumbList();
   }
-
 }
 </script>
 

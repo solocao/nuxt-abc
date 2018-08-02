@@ -11,11 +11,8 @@
       </div>
       <div class="swiper-pagination swiper-pagination-bullets"></div>
     </div>
-
   </div>
-
 </template>
-
 <script>
 const imgUrl = 'http://www.chinanews.com/part/society/508/U422P4T508D1F20424DT20180709135217.jpg'
 export default {
