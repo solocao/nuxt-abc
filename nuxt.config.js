@@ -15,6 +15,8 @@ module.exports = {
   },
 
   plugins: [{ src: '~plugins/iview', ssr: true }, '~plugins/axios.js', { src: '~/plugins/swiper.js', ssr: false }],
+
+  css: ['swiper/dist/css/swiper.css'],
   /*
   ** Customize the progress bar color
   */
